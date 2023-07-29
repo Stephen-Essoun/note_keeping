@@ -12,9 +12,9 @@ class AuthView extends StatefulWidget {
 class _AuthViewState extends State<AuthView> {
   bool _isSignIn = true;
 
-  void _toggleAuthMode() {
+  _toggleAuthMode(bool trueOrFalse) {
     setState(() {
-      _isSignIn = !_isSignIn;
+      _isSignIn = trueOrFalse;
     });
   }
 
@@ -36,10 +36,10 @@ class _AuthViewState extends State<AuthView> {
               height: MediaQuery.of(context).size.height * .08,
               child: Card(
                 child: Row(
-                  children: [
+                  children: [ 
                     Expanded(
                       child: GestureDetector(
-                        onTap: _toggleAuthMode,
+                        onTap: () => _toggleAuthMode(true),
                         child: Container(
                           height: MediaQuery.of(context).size.height,
                           // color: Colors.red[400],
@@ -52,7 +52,7 @@ class _AuthViewState extends State<AuthView> {
                     ),
                     Expanded(
                       child: GestureDetector(
-                        onTap: _toggleAuthMode,
+                        onTap: () => _toggleAuthMode(false),
                         child: Container(
                           height: MediaQuery.of(context).size.height,
                           // color: Colors.red,
@@ -64,12 +64,20 @@ class _AuthViewState extends State<AuthView> {
                 ),
               ),
             ),
+            SizedBox(height: _isSignIn ? 0 : 16),
+            Visibility(
+              visible: _isSignIn ? false : true,
+              child: AuthTextFields(
+                key: widget.key,
+                labelText: 'Full Name',
+              ),
+            ),
             const SizedBox(height: 16),
             AuthTextFields(
               key: widget.key,
               labelText: 'Email',
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 16),
             AuthTextFields(
               key: widget.key,
               labelText: 'Password',
