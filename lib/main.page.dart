@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:note/features/note/presentation/views/create.note.dart';
 import 'package:note/features/note/presentation/views/home.view.dart';
-import 'package:note/features/userProfile/presentation/views/user.profile.dart';
+import 'package:note/features/user/presentation/views/user.profile.dart';
 
 class MainView extends StatefulWidget {
   const MainView({super.key});
