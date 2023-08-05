@@ -19,13 +19,17 @@ class HomeView extends StatelessWidget {
         ),
         bottom: widget(context),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(
+      body: const Padding(
+        padding: EdgeInsets.only(
           top: 10,
           left: 10,
           right: 10,
         ),
-        child: TileBuilder(key: key),
+        child: TileBuilder(),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.note_add),
       ),
     );
   }

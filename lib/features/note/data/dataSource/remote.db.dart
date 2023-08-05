@@ -11,36 +11,38 @@ abstract class RemoteDB {
 }
 
 class RemoteDBImpl extends ChangeNotifier implements RemoteDB {
-  final db = FirebaseFirestore.instance
-      .collection('note')
-      .doc(FirebaseAuth.instance.currentUser!.email)
-      .collection('notes');
+  RemoteDBImpl();
+  final db = FirebaseFirestore.instance.collection('note');
+  // .doc(FirebaseAuth.instance.currentUser!.email)
+  // .collection('notes');
   @override
   Future<Note> add(Note note) async {
-    await db.doc(note.id).set(note.toMap());
+    await db.doc(note.id.toString()).set(note.toMap());
     return note;
   }
 
   @override
   Stream<List<Note>> getNotes() async* {
-    yield* db.snapshots().map((snapshot) => snapshot.docs.map(
-          (docs) {
-            return Note.fromMap(
-              docs.data(),
-            );
-          },
-        ).toList(),);
+    yield* db.snapshots().map(
+          (snapshot) => snapshot.docs.map(
+            (docs) {
+              return Note.fromMap(
+                docs.data(),
+              );
+            },
+          ).toList(),
+        );
   }
 
   @override
   Future<Note> update(Note note) async {
-    await db.doc(note.id).update(note.toMap());
+    await db.doc(note.id.toString()).update(note.toMap());
     return note;
   }
 
   @override
   Future<Note> delete(Note note) async {
-    await db.doc(note.id).delete();
+    await db.doc(note.id.toString()).delete();
     return note;
   }
 }

@@ -8,8 +8,8 @@ import 'package:note/shared/errors/failure.dart';
 class NoteRepositoryImpl extends ChangeNotifier implements NoteRepository {
   final RemoteDB db;
 
-  NoteRepositoryImpl({required this.db});
-
+  NoteRepositoryImpl( this.db);
+NoteRepositoryImpl.empty():db = RemoteDBImpl();
   @override
   Future<Either<Failure, Note>> add(Note note) async {
     try {
