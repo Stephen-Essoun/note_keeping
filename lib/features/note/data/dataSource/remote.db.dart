@@ -1,37 +1,46 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import '../../domain/entities/note.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+import 'package:note/features/note/domain/entities/note.dart';
 
 abstract class RemoteDB {
-  Future<Note> addNote(Note note);
-  Future<Note> editNote(Note note);
-  Future<Note> deleteNote(Note note);
-  Future<List<Note>> allNote();
+  Future<Note> add(Note note);
+  Stream<List<Note>> getNotes();
+  Future<Note> update(Note note);
+  Future<Note> delete(Note note);
 }
 
-class RemoteDBImpl implements RemoteDB{
-  final db = FirebaseFirestore.instance.doc('user').collection('');
+class RemoteDBImpl extends ChangeNotifier implements RemoteDB {
+  final db = FirebaseFirestore.instance
+      .collection('note')
+      .doc(FirebaseAuth.instance.currentUser!.email)
+      .collection('notes');
   @override
-  Future<Note> addNote(Note note) {
-    // TODO: implement addNote
-    throw UnimplementedError();
+  Future<Note> add(Note note) async {
+    await db.doc(note.id).set(note.toMap());
+    return note;
   }
 
   @override
-  Future<List<Note>> allNote() {
-    // TODO: implement allNote
-    throw UnimplementedError();
+  Stream<List<Note>> getNotes() async* {
+    yield* db.snapshots().map((snapshot) => snapshot.docs.map(
+          (docs) {
+            return Note.fromMap(
+              docs.data(),
+            );
+          },
+        ).toList(),);
   }
 
   @override
-  Future<Note> deleteNote(Note note) {
-    // TODO: implement deleteNote
-    throw UnimplementedError();
+  Future<Note> update(Note note) async {
+    await db.doc(note.id).update(note.toMap());
+    return note;
   }
 
   @override
-  Future<Note> editNote(Note note) {
-    // TODO: implement editNote
-    throw UnimplementedError();
+  Future<Note> delete(Note note) async {
+    await db.doc(note.id).delete();
+    return note;
   }
 }
