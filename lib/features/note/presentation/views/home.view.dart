@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:note/features/note/presentation/views/create.note.dart';
 import 'package:note/features/note/presentation/widgets/tile.builder.dart';
 
 import '../widgets/search.field.dart';
@@ -28,7 +29,11 @@ class HomeView extends StatelessWidget {
         child: TileBuilder(),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => const CreateNoteView(),
+          ));
+        },
         child: const Icon(Icons.note_add),
       ),
     );

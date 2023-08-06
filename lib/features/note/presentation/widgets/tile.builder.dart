@@ -22,7 +22,9 @@ class TileBuilder extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => const CreateNoteView(),
+                        builder: (context) => CreateNoteView(
+                          note: note[index],
+                        ),
                       ),
                     );
                   },
