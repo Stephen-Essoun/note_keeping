@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:note/features/note/presentation/provider/note.provider.dart';
 import 'package:note/features/note/presentation/views/create.note.dart';
 import 'package:provider/provider.dart';
@@ -18,34 +19,50 @@ class TileBuilder extends StatelessWidget {
           return ListView.builder(
               itemCount: note.length,
               itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => CreateNoteView(
-                          note: note[index],
+                return Slidable(
+                  startActionPane: ActionPane(
+                    motion: Container(
+                        width: 50,
+                        color: Colors.amber,
+                        child: GestureDetector(
+                            onTap: () {
+                              context
+                                  .read<NoteProvider>()
+                                  .delete(note[index], context);
+                            },
+                            child: const Icon(Icons.delete))),
+                    children: const [],
+                  ),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => CreateNoteView(
+                            note: note[index],
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                  child: Card(
-                    elevation: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                        height: MediaQuery.of(context).size.height * .08,
-                        width: MediaQuery.of(context).size.width,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Text(DateTime.now().toString()),
-                            Text(
-                              note[index].title,
-                              style: const TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w500),
-                            ),
-                          ],
+                      );
+                    },
+                    child: Card(
+                      elevation: 1,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          height: MediaQuery.of(context).size.height * .08,
+                          width: MediaQuery.of(context).size.width,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                  '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}'),
+                              Text(
+                                note[index].title,
+                                style: const TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w500),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

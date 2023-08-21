@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:note/features/note/data/dataSource/remote.db.dart';
 import 'package:note/features/note/presentation/provider/note.provider.dart';
 import 'package:provider/provider.dart';
 
@@ -29,15 +30,31 @@ class _CreateNoteViewState extends State<CreateNoteView> {
       appBar: AppBar(
         title: const Text('New note'),
         actions: [
-          IconButton(
-            onPressed: () {
-              final note = Note(
-                  id: widget.note?.id ?? generateRandomId(10),
-                  title: titleController.text,
-                  noteBody: contentController.text);
-              context.read<NoteProvider>().add(note, context);
-            },
-            icon: const Icon(Icons.done),
+          Visibility(
+            visible: true,
+            child: IconButton(
+              onPressed: () {
+                final note = Note(
+                    id: widget.note?.id ?? generateRandomId(10),
+                    title: titleController.text,
+                    noteBody: contentController.text);
+                context.read<NoteProvider>().add(note, context);
+              },
+              icon: const Icon(Icons.done),
+            ),
+          ),
+          Visibility(
+            visible: false,
+            child: IconButton(
+              onPressed: () {
+                final note = Note(
+                    id: widget.note!.id,
+                    title: titleController.text,
+                    noteBody: contentController.text);
+                context.read<NoteProvider>().delete(note, context);
+              },
+              icon: const Icon(Icons.delete),
+            ),
           )
         ],
       ),
@@ -49,7 +66,8 @@ class _CreateNoteViewState extends State<CreateNoteView> {
             const SizedBox(
               height: 10,
             ),
-            Text(DateTime.now().toString()),
+            Text(
+                '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}'),
             TextFormField(
               controller: titleController,
               decoration: const InputDecoration(

@@ -15,6 +15,7 @@ class RemoteDBImpl extends ChangeNotifier implements RemoteDB {
   final db = FirebaseFirestore.instance.collection('note');
   // .doc(FirebaseAuth.instance.currentUser!.email)
   // .collection('notes');
+  get rdb => db;
   @override
   Future<Note> add(Note note) async {
     await db.doc(note.id.toString()).set(note.toMap());
