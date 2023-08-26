@@ -40,7 +40,7 @@ class _AuthViewState extends State<AuthView> {
                     Expanded(
                       child: GestureDetector(
                         onTap: () => _toggleAuthMode(true),
-                        child: Container(
+                        child: SizedBox(
                           height: MediaQuery.of(context).size.height,
                           // color: Colors.red[400],
                           child: const Center(child: Text('Sign In')),
@@ -53,7 +53,7 @@ class _AuthViewState extends State<AuthView> {
                     Expanded(
                       child: GestureDetector(
                         onTap: () => _toggleAuthMode(false),
-                        child: Container(
+                        child: SizedBox(
                           height: MediaQuery.of(context).size.height,
                           // color: Colors.red,
                           child: const Center(child: Text('Sign  Up')),

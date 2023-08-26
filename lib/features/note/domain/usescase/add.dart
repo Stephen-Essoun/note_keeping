@@ -7,15 +7,13 @@ import 'package:note/shared/utils/usecase.dart';
 
 import '../entities/note.dart';
 
-class AddNote extends ChangeNotifier implements UseCase<Note,Params<Note>>{
+class AddNote extends ChangeNotifier implements UseCase<Note, Params<Note>> {
   final NoteRepository repo;
 
   AddNote(this.repo);
-  AddNote.empty():repo = NoteRepositoryImpl.empty();
+  AddNote.empty() : repo = NoteRepositoryImpl.empty();
   @override
   Future<Either<Failure, Note>> call(Params<Note> params) async {
     return await repo.add(params.data);
   }
-  
-  
 }

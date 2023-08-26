@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:note/features/note/domain/usescase/add.dart';
 import 'package:note/features/note/domain/usescase/delete.dart';

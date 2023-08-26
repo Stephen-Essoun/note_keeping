@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:note/features/note/data/dataSource/remote.db.dart';
 import 'package:note/features/note/presentation/provider/note.provider.dart';
 import 'package:provider/provider.dart';
 
